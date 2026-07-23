@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuadroClin — Seu histórico de saúde no bolso</title>
+<meta name="description" content="Organize medicamentos, alergias, exames e emergências em um só app. 100% offline e privado. Acesso vitalício por apenas R$ 9,90.">
+<style>
+  :root{
+    --azul:#2563EB; --azul-escuro:#1E3A8A; --verde:#10B981;
+    --vermelho:#EF4444; --cinza:#6B7280; --bg:#F4F6FA;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif;color:#1f2937;background:#fff;line-height:1.6}
+  .container{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* HERO */
+  .hero{background:linear-gradient(135deg,var(--azul-escuro) 0%,var(--azul) 55%,#14b8a6 100%);color:#fff;padding:72px 0 88px;text-align:center}
+  .logo{display:inline-flex;align-items:center;gap:12px;font-weight:800;font-size:1.4rem;margin-bottom:36px}
+  .logo-icone{width:44px;height:44px;background:#fff;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-size:24px}
+  .hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:900;line-height:1.15;margin-bottom:20px}
+  .hero h1 span{color:#7EF3C9}
+  .hero p.sub{font-size:1.25rem;max-width:640px;margin:0 auto 36px;opacity:.94}
+  .btn{display:inline-block;padding:16px 36px;border-radius:16px;font-weight:800;font-size:1.1rem;text-decoration:none;transition:transform .15s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-verde{background:var(--verde);color:#fff;box-shadow:0 8px 24px rgba(16,185,129,.4)}
+  .selo-preco{margin-top:22px;font-size:1rem;opacity:.95}
+  .selo-preco b{font-size:1.3rem}
+
+  /* FAIXA DE URGÊNCIA */
+  .faixa{background:var(--vermelho);color:#fff;text-align:center;padding:14px;font-weight:700;font-size:1.05rem}
+
+  /* BENEFÍCIOS */
+  section{padding:72px 0}
+  .titulo-secao{text-align:center;font-size:clamp(1.6rem,4vw,2.3rem);font-weight:900;margin-bottom:12px}
+  .sub-secao{text-align:center;color:var(--cinza);max-width:620px;margin:0 auto 48px;font-size:1.1rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+  .card{background:var(--bg);border-radius:24px;padding:32px 28px}
+  .card .emoji{font-size:2.4rem;display:block;margin-bottom:14px}
+  .card h3{font-size:1.25rem;margin-bottom:8px}
+  .card p{color:#374151}
+
+  /* EMERGÊNCIA */
+  .emergencia{background:#7f1d1d;color:#fff}
+  .emergencia .titulo-secao{color:#fff}
+  .emergencia .sub-secao{color:#fecaca}
+  .emergencia-destaque{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:24px;padding:36px;text-align:center;max-width:720px;margin:0 auto;font-size:1.15rem}
+  .emergencia-destaque b{color:#7EF3C9}
+
+  /* PREÇO */
+  .preco{background:var(--bg)}
+  .preco-card{background:#fff;border:3px solid var(--verde);border-radius:28px;max-width:460px;margin:0 auto;padding:44px 36px;text-align:center;box-shadow:0 20px 60px rgba(37,99,235,.12)}
+  .preco-card .tarja{display:inline-block;background:var(--verde);color:#fff;font-weight:800;padding:6px 18px;border-radius:999px;font-size:.85rem;margin-bottom:18px;text-transform:uppercase;letter-spacing:.5px}
+  .preco-valor{font-size:3.4rem;font-weight:900;color:var(--azul)}
+  .preco-valor small{font-size:1.1rem;color:var(--cinza);font-weight:600}
+  .preco-card ul{list-style:none;text-align:left;margin:26px 0}
+  .preco-card li{padding:8px 0;padding-left:30px;position:relative}
+  .preco-card li::before{content:"✔";position:absolute;left:0;color:var(--verde);font-weight:900}
+  .riscado{color:var(--cinza);text-decoration:line-through;font-size:1.05rem}
+
+  /* DISPONIBILIDADE */
+  .lojas{text-align:center}
+  .badges{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+  .badge{border-radius:16px;padding:16px 28px;display:inline-flex;align-items:center;gap:12px;font-weight:700;font-size:1.05rem;text-decoration:none}
+  .badge-play{background:#111;color:#fff}
+  .badge-ios{background:#e5e7eb;color:#6b7280;cursor:default}
+  .badge small{display:block;font-weight:400;font-size:.75rem;opacity:.8}
+
+  /* FOOTER */
+  footer{background:var(--azul-escuro);color:#cbd5e1;padding:36px 0;text-align:center;font-size:.9rem}
+  footer a{color:#93c5fd;text-decoration:none;margin:0 10px}
+  .aviso{max-width:760px;margin:14px auto 0;font-size:.8rem;opacity:.75}
+
+  @media (max-width:600px){
+    .hero{padding:48px 0 64px}
+    section{padding:52px 0}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <div class="logo"><span class="logo-icone">➕</span> QuadroClin</div>
+    <h1>Toda a sua saúde organizada.<br><span>Na palma da mão. Em segundos.</span></h1>
+    <p class="sub">Medicamentos com lembretes, alergias, exames com controle de vencimento e uma tela de emergência que pode salvar a sua vida. Tudo 100% offline e privado.</p>
+    <a class="btn btn-verde" href="#preco">QUERO ORGANIZAR MINHA SAÚDE →</a>
+    <div class="selo-preco">Pagamento único de <b>R$ 9,90</b> · acesso para sempre · sem mensalidade</div>
+  </div>
+</header>
+
+<div class="faixa">⚡ Sem assinatura, sem anúncio, sem cadastro: pague uma vez e use para sempre</div>
+
+<!-- BENEFÍCIOS -->
+<section>
+  <div class="container">
+    <h2 class="titulo-secao">Por que milhares de famílias precisam do QuadroClin?</h2>
+    <p class="sub-secao">Criado para pacientes, idosos, gestantes, pessoas com doenças crônicas e quem cuida de quem ama.</p>
+    <div class="grid">
+      <div class="card"><span class="emoji">💊</span><h3>Nunca mais esqueça um remédio</h3><p>Lembretes automáticos em cada horário, botão "Tomei" na própria notificação e histórico completo de doses para mostrar ao médico.</p></div>
+      <div class="card"><span class="emoji">🧪</span><h3>Exames sempre em dia</h3><p>Registre exames com laudo anexado e deixe o app avisar quando estiver na hora de repetir: 3, 6 meses, 1 ou 2 anos. Chega de exame vencido.</p></div>
+      <div class="card"><span class="emoji">🚨</span><h3>Tela de emergência que fala por você</h3><p>Um toque mostra tipo sanguíneo, alergias, medicamentos e contatos — em letras grandes, para socorristas agirem em segundos.</p></div>
+      <div class="card"><span class="emoji">📄</span><h3>PDF profissional em 1 toque</h3><p>Compartilhe com a família o quadro clínico de quem vocês cuidam: assim, qualquer pessoa que preste socorro tem o documento no celular para mostrar ao médico na hora.</p></div>
+      <div class="card"><span class="emoji">🔒</span><h3>Privacidade de verdade</h3><p>Seus dados ficam só no seu celular, com criptografia de nível bancário, PIN e biometria. Nada vai para a internet. Nunca.</p></div>
+      <div class="card"><span class="emoji">👨‍👩‍👧</span><h3>Feito para todas as idades</h3><p>Interface simples, letras ajustáveis e botões grandes. Perfeito para idosos e para quem cuida dos pais.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- EMERGÊNCIA -->
+<section class="emergencia">
+  <div class="container">
+    <h2 class="titulo-secao">E se algo acontecer e você não puder falar?</h2>
+    <p class="sub-secao">Em uma emergência, cada segundo conta.</p>
+    <div class="emergencia-destaque">
+      Alergia a dipirona? Diabetes? Anticoagulante em uso? O socorrista precisa saber <b>agora</b>.<br><br>
+      O botão <b>EMERGÊNCIA</b> do QuadroClin mostra tudo o que importa em uma única tela de alto contraste — e pode ser a diferença entre um atendimento certo e um erro grave.
+    </div>
+  </div>
+</section>
+
+<!-- PREÇO -->
+<section class="preco" id="preco">
+  <div class="container">
+    <h2 class="titulo-secao">Menos que um lanche. Para sempre.</h2>
+    <p class="sub-secao">Enquanto outros apps cobram mensalidade eterna, aqui você paga uma única vez.</p>
+    <div class="preco-card">
+      <span class="tarja">Oferta de lançamento</span>
+      <div><span class="riscado">de R$ 29,90</span></div>
+      <div class="preco-valor">R$ 9,90 <small>pagamento único</small></div>
+      <ul>
+        <li>Acesso <b>permanente</b> a todas as ferramentas</li>
+        <li>Medicamentos com lembretes ilimitados</li>
+        <li>Exames com alerta de vencimento</li>
+        <li>Tela de emergência + PDF profissional</li>
+        <li>Todas as atualizações futuras incluídas</li>
+        <li>Sem mensalidade, sem anúncios, sem pegadinhas</li>
+      </ul>
+      <a class="btn btn-verde" href="#lojas">GARANTIR MEU ACESSO VITALÍCIO</a>
+    </div>
+  </div>
+</section>
+
+<!-- DISPONIBILIDADE -->
+<section class="lojas" id="lojas">
+  <div class="container">
+    <h2 class="titulo-secao">Baixe agora</h2>
+    <p class="sub-secao">Disponível para Android. A versão para iPhone já está em desenvolvimento.</p>
+    <div class="badges">
+      <!-- Substitua # pelo link real da Play Store após a publicação -->
+      <a class="badge badge-play" href="#" aria-label="Baixar na Google Play">▶ <span>Disponível no<br><b style="font-size:1.2rem">Google Play</b></span></a>
+      <span class="badge badge-ios"> <span>iPhone (iOS)<br><b style="font-size:1.05rem">Em desenvolvimento 🚧</b></span></span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div><b>QuadroClin</b> — Seu histórico de saúde no bolso</div>
+    <div style="margin-top:10px">
+      <a href="politica_de_privacidade.html">Política de Privacidade</a> ·
+      <a href="mailto:luini.araujoo@gmail.com">Contato</a>
+    </div>
+    <p class="aviso">O QuadroClin é uma ferramenta de organização pessoal de informações de saúde. Não é um dispositivo médico e não substitui orientação, diagnóstico ou tratamento profissional. Em emergências, ligue 192 (SAMU).</p>
+  </div>
+</footer>
+
+</body>
+</html>
